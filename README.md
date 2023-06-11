@@ -11,30 +11,36 @@
 
 ## Register
 
-1. npm install `jsonwebtoken` [docs link](https://www.npmjs.com/package/jsonwebtoken)
 1. Open `Register.js` component in the pages folder.
 1. import the `register` function from the `api/auth.js`.
 1. Use the `useMutation` hook with the `register` function by passing `userInfo`.
-1. Console log the response from the backend. Ensure that your response has the key of `access` followed by an encoded string. Remove it when its working.
+1. go to the `api/auth.js` file and inside the `register` function add the formData.
+
+```js
+const formData = new FormData();
+for (const key in userInfo) formData.append(key, userInfo[key]);
+```
+
+- then pass the `formData` instead of userInfo to the api request
+- check that the register is working by going to the users tap
 
 ## Login
 
 1. Open `Login.js` component in the pages folder.
-2. import the `login` function found in the `api/auth.js` to retrieve a token with axios and react query to send a request to the backend.
+2. import the `login` found in the `api/auth.js` Use the `useMutation` hook with the `login` function and pass it the user info.
+
+- you should see the token in the response
 
 ## Maintaining Login (Local storage)
 
 1. In `auth.js` file create a function setUser that saves your token in the `localStorage`
+1. In your `api/index.js`, use your `instance` to create an interceptor using the `interceptors.request.use()` method with an anonymous function. We will check if the response has a property called `token`. Save the the data with to a variable called `token`. Save the token using `localStorage.setItem` with the key `token` and the value `token`
 
 ## Logout
 
 1. go to `auth.js` in the api folder
 2. create a function `logout` that resets the user to null and deletes the token from the instance header.
 
-## Continuing the Task Part 2
-
 ## Sending requests with the auth token attached
 
 ## Protected Routes (aka cant add a new pet if not logged in ‘if going to use the pet api’)
-
-## Continuing the Task Part 3
